@@ -1,20 +1,9 @@
 <template>
-  <div class="dark min-h-screen bg-gray-900 text-gray-100">
-    <CharacterList />
+  <div class="min-h-screen bg-gray-900 text-gray-100">
+    <router-view />
   </div>
 </template>
 
 <script>
-import CharacterList from './components/CharacterList.vue'
-
-export default {
-  name: 'App',
-  components: {
-    CharacterList
-  }
-}
+export default { name: 'App' }
 </script>
-
-<style>
-
-</style>

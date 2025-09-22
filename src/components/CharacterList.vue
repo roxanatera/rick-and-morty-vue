@@ -38,18 +38,24 @@
                  hover:-translate-y-1 hover:scale-105 hover:shadow-xl
                  hover:ring-2 hover:ring-blue-500"
         >
-          <img :src="ch.image" :alt="ch.name" class="w-full h-56 object-cover" />
-          <div class="p-4">
-            <h2 class="text-xl font-semibold text-white">{{ ch.name }}</h2>
-            <p class="text-sm text-gray-300">
-              <span class="font-medium text-gray-200">Status:</span> {{ ch.status }} ·
-              <span class="font-medium text-gray-200">Species:</span> {{ ch.species }}
-            </p>
-            <p class="text-sm text-gray-300 mt-1">
-              <span class="font-medium text-gray-200">Origin:</span>
-              {{ ch.origin && ch.origin.name }}
-            </p>
-          </div>
+          <!-- Navega al detalle -->
+          <router-link
+            class="block focus:outline-none"
+            :to="{ name: 'character-detail', params: { id: ch.id } }"
+          >
+            <img :src="ch.image" :alt="ch.name" class="w-full h-56 object-cover" />
+            <div class="p-4">
+              <h2 class="text-xl font-semibold text-white">{{ ch.name }}</h2>
+              <p class="text-sm text-gray-300">
+                <span class="font-medium text-gray-200">Status:</span> {{ ch.status }} ·
+                <span class="font-medium text-gray-200">Species:</span> {{ ch.species }}
+              </p>
+              <p class="text-sm text-gray-300 mt-1">
+                <span class="font-medium text-gray-200">Origin:</span>
+                {{ ch.origin && ch.origin.name }}
+              </p>
+            </div>
+          </router-link>
         </article>
       </div>
 
@@ -84,46 +90,28 @@ import { CharactersApi } from '../api/characters'
 export default {
   name: 'CharacterList',
   data() {
-    return {
-      query: '',
-      page: 1,
-      characters: [],
-      info: null,
-      loading: false,
-      error: null,
-    }
+    return { query:'', page:1, characters:[], info:null, loading:false, error:null }
   },
-  created() {
-    this.search(1)
-  },
+  created() { this.search(1) },
   methods: {
     async search(nextPage) {
-      this.loading = true
-      this.error = null
+      this.loading = true; this.error = null
       try {
         this.page = (nextPage !== undefined && nextPage !== null) ? nextPage : this.page
         const data = await CharactersApi.list({ page: this.page, name: this.query })
         this.characters = (data && data.results) ? data.results : []
         this.info = (data && data.info) ? data.info : { pages: 1 }
       } catch (e) {
-        const resp = e && e.response
-        const d = resp && resp.data
+        const resp = e && e.response; const d = resp && resp.data
         this.error = (d && d.error) || (e && e.message) || 'Fallo cargando personajes'
-        this.characters = []
-        this.info = null
-      } finally {
-        this.loading = false
-      }
+        this.characters = []; this.info = null
+      } finally { this.loading = false }
     },
   },
 }
 </script>
 
 <style scoped>
-/* Animación de entrada con “stagger” (usa inline animationDelay en :style) */
-@keyframes cardIn {
-  0%   { opacity: 0; transform: translateY(10px) scale(0.98); }
-  100% { opacity: 1; transform: translateY(0)     scale(1); }
-}
+@keyframes cardIn { 0%{opacity:0;transform:translateY(10px) scale(.98)} 100%{opacity:1;transform:none} }
 .card { animation: cardIn .45s cubic-bezier(.22,.61,.36,1) both; }
 </style>
