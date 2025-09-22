@@ -5,25 +5,25 @@ It is a learning project for my internship.
 
 # Features
 
-List of characters with search and pagination
+**List of characters with search and pagination
 
 Simple dark UI with TailwindCSS
 
 API calls with Axios
 
-Clean folder structure and easy code to read
+Clean folder structure and easy code to read**
 
 # Tech Stack
 
-Vue 2 (Vue CLI 3)
+**Vue 2 (Vue CLI 3)***
 
-Axios
+**Axios**
 
-TailwindCSS (postcss7-compat)
+**TailwindCSS (postcss7-compat)**
 
 # Requirements
 
-Node.js LTS (18 or 20 is recommended)
+**Node.js LTS (18 or 20 is recommended)**
 
 npm
 
